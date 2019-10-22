@@ -1,0 +1,19 @@
+{
+    "name": "cookbook/cookbook",
+    "require": {
+        "ext-pdo": "*",
+        "slim/slim": "^3.0",
+        "slim/php-view": "^2.2"
+    },
+    "authors": [
+        {
+            "name": "Gordana",
+            "email": "gordana@test.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Cookbook\\": "classes/"
+        }
+    }
+}

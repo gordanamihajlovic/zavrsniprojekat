@@ -1,0 +1,1 @@
+{"virtualbox":{"application":{"id":"application","owner":"www-data","group":"www-data","guestpath":"/var/www/cookbook","hostpath":"/Users/sanjatasic/Work/private/cookbook","disabled":false,"__vagrantfile":true},"/tmp/vagrant":{"create":true,"guestpath":"/tmp/vagrant","hostpath":"/private/tmp/vagrant","disabled":false,"__vagrantfile":true}}}
