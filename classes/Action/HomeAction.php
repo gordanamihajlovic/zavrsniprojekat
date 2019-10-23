@@ -9,8 +9,11 @@ class HomeAction extends BaseAction
 {
     public function __invoke(Request $request, Response $response)
     {
-        return $this->render($response, "home.php", [
-            'pageTitle' => 'Dobrodošli na Cookbook'
+        $recipes = $this->readRecipes();
+
+        return $this->render($response, "list.php", [
+            'pageTitle' => 'Svi recepti',
+            'recipes' => $recipes
         ]);
     }
 }

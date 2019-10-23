@@ -15,10 +15,7 @@ class ReadRecipeAction extends BaseAction
         if ($recipeId > 0) {
             $recipe = $this->readRecipe($recipeId);
             if (!empty($recipe)) {
-                $db = $this->getDb();
-                $statement = $db->prepare("SELECT * FROM categories WHERE id = :id");
-                $statement->execute([':id' => $recipe['category_id']]);
-                $category = $statement->fetch(PDO::FETCH_ASSOC);
+                $category = $this->readCategory($recipe['category_id']);
                 if (!empty($category)) {
                     return $this->render($response, "recipe/view.php", [
                         'pageTitle' => $recipe['name'],

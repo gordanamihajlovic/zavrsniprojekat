@@ -32,10 +32,7 @@ class RecipeFormAction extends BaseAction
             'description' => ''
         ];
         if ($recipeId > 0) {
-            $sql = "SELECT * FROM recipes WHERE id = :id";
-            $statement = $db->prepare($sql);
-            $statement->execute([':id' => $recipeId]);
-            $recipe = (array)$statement->fetch(PDO::FETCH_ASSOC);
+            $recipe = $this->readRecipe($recipeId);
             if (!empty($recipe)) {
                 $pageTitle = 'Izmena recepta ' . $recipe['name'];
             }

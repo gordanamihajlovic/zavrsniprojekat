@@ -12,8 +12,12 @@ class ListAction extends BaseAction
         // identifikator kategorije poslat kao deo URL-a (url path)
         $categoryId = (int)$request->getAttribute('category-id', 0);
 
-        return $this->render($response, "home.php", [
-            'pageTitle' => 'Kategorija'
+        $category = $this->readCategory($categoryId);
+        $recipes = $this->readRecipes($categoryId);
+
+        return $this->render($response, "list.php", [
+            'pageTitle' => $category['name'],
+            'recipes' => $recipes
         ]);
     }
 }

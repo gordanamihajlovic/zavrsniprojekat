@@ -25,8 +25,7 @@ class BaseAction
 
         // lista kategorija recepata je potrebna za ispis glavne navigacije
         // izvlacimo listu kategorija recepata iz baze
-        $query = $db->query("SELECT * FROM categories");
-        $categories = $query->fetchAll(PDO::FETCH_ASSOC);
+        $categories = $this->readCategories();
         // dodajemo 'categories' promenljivu u templejt promenljive da bi bila dostupna u templejtu
         $templateVars['categories'] = $categories;
 
@@ -36,6 +35,29 @@ class BaseAction
         $view->setLayout("layout/layout.php");
 
         return $view->render($response, $template, $templateVars);
+    }
+
+    protected function readCategories()
+    {
+        $db = $this->getDb();
+        $query = $db->query("SELECT * FROM categories ORDER BY name ASC");
+        $categories = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        return $categories;
+    }
+
+    protected function readCategory($categoryId)
+    {
+        $category = [];
+
+        if ($categoryId > 0) {
+            $db = $this->getDb();
+            $statement = $db->prepare("SELECT * FROM categories WHERE id = :id");
+            $statement->execute([':id' => $categoryId]);
+            $category = (array)$statement->fetch(PDO::FETCH_ASSOC);
+        }
+
+        return $category;
     }
 
     protected function readRecipe($recipeId)
@@ -50,6 +72,22 @@ class BaseAction
         }
 
         return $recipe;
+    }
+
+    protected function readRecipes($categoryId = null)
+    {
+        $db = $this->getDb();
+
+        if (!empty($categoryId)) {
+            $statement = $db->prepare("SELECT * FROM recipes WHERE category_id = :id ORDER BY date_updated DESC");
+            $statement->execute([':id' => $categoryId]);
+        } else {
+            $statement = $db->prepare("SELECT * FROM recipes ORDER BY date_updated DESC");
+            $statement->execute();
+        }
+        $recipes = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $recipes;
     }
 
     protected function getUploadedImage(Request $request, $recipeId = 0)
