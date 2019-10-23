@@ -32,4 +32,6 @@
         </div>
         <?php endforeach; ?>
     </div>
+<?php else: ?>
+    <p>Nema recepata</p>
 <?php endif; ?>
